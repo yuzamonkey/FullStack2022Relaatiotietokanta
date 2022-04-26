@@ -29,4 +29,12 @@ router.put('/:username', userFinder, async (req, res) => {
     res.json(req.user)
 })
 
+router.delete('/', async (req, res) => {
+    await User.destroy({
+        where: {},
+        truncate: true
+    })
+    res.status(200).end()
+})
+
 module.exports = router
