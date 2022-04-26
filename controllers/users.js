@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const { response } = require('express')
 const { User } = require('../models')
+const { Blog } = require('../models')
 
 const userFinder = async (req, res, next) => {
     console.log("••• PARAM", req.params.username)
@@ -14,7 +15,12 @@ const userFinder = async (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-    const users = await User.findAll()
+    const users = await User.findAll({
+        include: {
+            model: Blog,
+            attributes: { exclude: ['userId'] }
+        }
+    })
     res.json(users)
 })
 
