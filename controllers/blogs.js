@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const { response } = require('express')
+const { Op } = require('sequelize')
 const { Blog } = require('../models')
 const { User } = require('../models')
 
@@ -33,11 +34,17 @@ const tokenExtractor = (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
+    const queryParam = req.query.search ? req.query.search.toLowerCase(): ''
     const blogs = await Blog.findAll({
         attributes: { exclude: ['userId'] },
         include: {
             model: User,
             attributes: ['name']
+        },
+        where: {
+            title: {
+                [Op.iLike]: `%${queryParam}%`
+            }
         }
     })
     res.json(blogs)
