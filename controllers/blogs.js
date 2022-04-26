@@ -34,7 +34,7 @@ const tokenExtractor = (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-    const queryParam = req.query.search ? req.query.search.toLowerCase(): ''
+    const queryParam = req.query.search ? req.query.search.toLowerCase() : ''
     const blogs = await Blog.findAll({
         attributes: { exclude: ['userId'] },
         include: {
@@ -42,8 +42,13 @@ router.get('/', async (req, res) => {
             attributes: ['name']
         },
         where: {
-            title: {
-                [Op.iLike]: `%${queryParam}%`
+            [Op.or]: {
+                title: {
+                    [Op.iLike]: `%${queryParam}%`
+                },
+                author: {
+                    [Op.iLike]: `%${queryParam}%`
+                }
             }
         }
     })
