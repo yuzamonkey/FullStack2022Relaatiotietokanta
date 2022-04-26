@@ -50,7 +50,10 @@ router.get('/', async (req, res) => {
                     [Op.iLike]: `%${queryParam}%`
                 }
             }
-        }
+        },
+        order: [
+            ['likes', 'DESC']
+        ]
     })
     res.json(blogs)
 })
