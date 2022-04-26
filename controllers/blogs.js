@@ -63,9 +63,13 @@ router.put('/:id', blogFinder, async (req, res) => {
     res.json(req.blog)
 })
 
-router.delete('/:id', blogFinder, async (req, res) => {
-    req.blog.destroy()
-    res.status(200).end()
+router.delete('/:id', [tokenExtractor, blogFinder], async (req, res) => {
+    if (req.blog.userId === req.decodedToken.id) {
+        req.blog.destroy()
+        res.status(200).end()
+    } else {
+        res.status(401).end()
+    }
 })
 
 module.exports = router
