@@ -24,12 +24,10 @@ module.exports = {
                 defaultValue: 0,
             },
             created_at: {
-                type: DataTypes.DATE,
-                defaultValue: new Date()
+                type: DataTypes.DATE
             },
             updated_at: {
-                type: DataTypes.DATE,
-                defaultValue: new Date()
+                type: DataTypes.DATE
             },
         })
         await queryInterface.createTable('users', {
@@ -49,7 +47,7 @@ module.exports = {
                 validate: {
                     isEmail: {
                         msg: "Not a valid email"
-                    } 
+                    }
                 }
             },
             password: {

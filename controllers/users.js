@@ -5,7 +5,6 @@ const { User } = require('../models')
 const { Blog } = require('../models')
 
 const userFinder = async (req, res, next) => {
-    console.log("••• PARAM", req.params.username)
     req.user = await User.findOne({ where: { username: req.params.username } })
     if (req.user) {
         next()
