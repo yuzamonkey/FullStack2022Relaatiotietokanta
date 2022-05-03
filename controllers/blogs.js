@@ -4,7 +4,7 @@ const { response } = require('express')
 const { Op } = require('sequelize')
 const { Blog } = require('../models')
 const { User } = require('../models')
-const tokenExtractor = require('../middleware/token_extractor')
+const { tokenExtractor } = require('../middleware/token_extractor')
 
 const blogFinder = async (req, res, next) => {
     req.blog = await Blog.findByPk(req.params.id)

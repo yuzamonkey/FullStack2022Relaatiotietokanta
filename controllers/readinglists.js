@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { Readinglist } = require('../models')
-const tokenExtractor = require('../middleware/token_extractor')
+const { tokenExtractor } = require('../middleware/token_extractor')
 
 router.get('/', async (req, res) => {
     const lists = await Readinglist.findAll({
