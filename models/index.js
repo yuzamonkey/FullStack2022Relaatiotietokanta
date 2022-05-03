@@ -1,13 +1,15 @@
 const Blog = require('./blog')
 const User = require('./user')
+const Readinglist = require('./readinglist')
 
 User.hasMany(Blog)
 Blog.belongsTo(User)
 
-// Blog.sync({ alter: true })
-// User.sync({ alter: true })
+Readinglist.hasMany(Blog)
+Readinglist.belongsTo(User)
 
 module.exports = {
   Blog,
-  User
+  User,
+  Readinglist
 }
