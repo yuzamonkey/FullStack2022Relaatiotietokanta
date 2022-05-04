@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { Readinglist } = require('../models')
 const { tokenExtractor } = require('../middleware/token_extractor')
+const { sessionFinder } = require('../middleware/session_finder')
 
 router.get('/', async (req, res) => {
     const lists = await Readinglist.findAll({
@@ -16,11 +17,11 @@ router.post('/', async (req, res) => {
     res.send(item)
 })
 
-router.put('/:id', tokenExtractor, async (req, res) => {
+router.put('/:id', [tokenExtractor, sessionFinder], async (req, res) => {
     try {
         const item = await Readinglist.findByPk(req.params.id)
         item.read = req.body.read
-        item.save()
+        await item.save()
         res.send(item)
     } catch (err) {
         res.status(400).json({ error })

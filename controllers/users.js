@@ -1,10 +1,10 @@
 const router = require('express').Router()
 
-const { response } = require('express')
 const { User } = require('../models')
 const { Blog } = require('../models')
 
-const userFinder = async (req, res, next) => {
+
+const findUserByUsername = async (req, res, next) => {
     req.user = await User.findOne({ where: { username: req.params.username } })
     if (req.user) {
         next()
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
     res.json(user)
 })
 
-router.put('/:username', userFinder, async (req, res) => {
+router.put('/:username', findUserByUsername, async (req, res) => {
     req.user.username = req.body.username
     await req.user.save()
     res.json(req.user)
